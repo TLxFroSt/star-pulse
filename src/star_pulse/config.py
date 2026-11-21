@@ -5,6 +5,7 @@ correspondent à l'infra locale lancée par `make up`.
 """
 
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal
 
 from pydantic import Field, HttpUrl, SecretStr
@@ -45,6 +46,9 @@ class Settings(BaseSettings):
     s3_secret_key: SecretStr = SecretStr("minioadmin")
     s3_region: str = "us-east-1"
     s3_bucket: str = "lake"
+
+    # --- DuckDB (base locale de dbt ; le silver est écrit en Parquet sur S3)
+    duckdb_path: Path = Path("data/star_pulse.duckdb")
 
     # --- Sources open data
     gtfs_static_url: HttpUrl = HttpUrl(

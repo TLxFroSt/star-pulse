@@ -1,0 +1,18 @@
+version: 2
+
+sources:
+  - name: gtfs_rt
+    description: >
+      Messages GTFS-RT consommés depuis Redpanda (une ligne par entité, JSON
+      brut dans entity_json), partitionnés par heure d'émission du flux :
+      bronze/gtfs_rt/<flux>/date=AAAA-MM-JJ/hour=HH/.
+    meta:
+      external_location: >-
+        read_parquet('s3://{{ env_var('STAR_PULSE_S3_BUCKET', 'lake') }}/bronze/gtfs_rt/{name}/*/*/*.parquet',
+        hive_partitioning = true, hive_types_autocast = false, union_by_name = true)
+    loaded_at_field: ingested_at
+    freshness:
+      warn_after: {count: 10, period: minute}
+    tables:
+      - name: trip_updates
+      - name: vehicle_positions

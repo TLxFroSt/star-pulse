@@ -1,0 +1,27 @@
+name: star_pulse
+version: "0.1.0"
+config-version: 2
+profile: star_pulse
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+target-path: target
+clean-targets: ["target", "logs"]
+
+vars:
+  # Fuseau des horaires GTFS (agency_timezone du réseau STAR).
+  gtfs_timezone: Europe/Paris
+  # Écart max entre deux instantanés d'une même course pour les considérer
+  # comme le même passage (un trip_id peut circuler plusieurs jours).
+  rt_run_gap_hours: 4
+  # Une prévision dont la course n'a pas été mise à jour depuis plus longtemps
+  # est figée (courses « fantômes » du flux STAR) : elle est ignorée.
+  rt_max_update_age_minutes: 30
+
+models:
+  star_pulse:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: table

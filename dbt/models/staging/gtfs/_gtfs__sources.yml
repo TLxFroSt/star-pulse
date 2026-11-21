@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: gtfs
+    description: >
+      GTFS théorique STAR en bronze (Parquet, toutes colonnes en texte), une
+      partition par version de contenu :
+      bronze/gtfs_static/<table>/ingestion_date=AAAA-MM-JJ/version=<sha12>/.
+    meta:
+      external_location: >-
+        read_parquet('s3://{{ env_var('STAR_PULSE_S3_BUCKET', 'lake') }}/bronze/gtfs_static/{name}/*/*/*.parquet',
+        hive_partitioning = true, hive_types_autocast = false)
+    tables:
+      - name: feed_info
+      - name: routes
+      - name: stops
+      - name: trips
+      - name: stop_times
+      - name: calendar
+      - name: calendar_dates

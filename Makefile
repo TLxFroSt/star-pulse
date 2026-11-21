@@ -1,10 +1,11 @@
 .DEFAULT_GOAL := help
 UV ?= uv
 
-.PHONY: help install up down lint fmt test test-integration ingest-gtfs produce-rt
+.PHONY: help install up down lint fmt test test-integration ingest-gtfs produce-rt consume-rt \
+	dbt-build dbt-freshness dbt-docs
 
 help: ## Affiche cette aide
-	@grep -E '^[a-z]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  %-10s %s\n", $$1, $$2}'
+	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  %-16s %s\n", $$1, $$2}'
 
 install: ## Installe les dépendances et les hooks pre-commit
 	$(UV) sync
@@ -40,3 +41,13 @@ produce-rt: ## Lance le producteur GTFS-RT vers Redpanda (Ctrl+C pour arrêter)
 
 consume-rt: ## Consomme Redpanda et écrit le Parquet bronze sur MinIO (Ctrl+C pour arrêter)
 	$(UV) run python -m star_pulse.streaming.bronze_writer
+
+dbt-build: ## Construit et teste le silver dbt (bronze MinIO -> silver)
+	$(UV) run python -m star_pulse.transform.dbt_runner build
+
+dbt-freshness: ## Vérifie la fraîcheur du bronze temps réel
+	$(UV) run python -m star_pulse.transform.dbt_runner source freshness
+
+dbt-docs: ## Génère et sert la documentation dbt (http://localhost:8081)
+	$(UV) run python -m star_pulse.transform.dbt_runner docs generate
+	$(UV) run python -m star_pulse.transform.dbt_runner docs serve --port 8081

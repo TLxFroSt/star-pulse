@@ -69,6 +69,18 @@ make produce-rt    # terminal 1 — Ctrl+C pour arrêter ; messages sur http://l
 make consume-rt    # terminal 2 — écrit un lot Parquet par minute dans MinIO
 ```
 
+Silver (après quelques minutes de temps réel) :
+
+```bash
+make dbt-build     # staging + rapprochement théorique / réel, tests dbt
+make dbt-docs      # documentation et lignage sur http://localhost:8081
+```
+
+La table centrale `int_stop_passages_matched` (un passage révolu par ligne, avec son
+horaire théorique et son retard en secondes) est écrite en Parquet dans
+`s3://lake/silver/`. Les règles de rapprochement sont décrites dans
+[l'ADR 0005](docs/adr/0005-silver-rapprochement-theorique-reel.md).
+
 ## Commandes
 
 | Commande | Effet |
@@ -81,11 +93,14 @@ make consume-rt    # terminal 2 — écrit un lot Parquet par minute dans MinIO
 | `make ingest-gtfs` | ingère le GTFS théorique STAR dans `s3://lake/bronze/gtfs_static/` |
 | `make produce-rt` | interroge les flux GTFS-RT toutes les 30 s et publie sur Redpanda |
 | `make consume-rt` | consomme Redpanda et écrit le Parquet bronze (`s3://lake/bronze/gtfs_rt/`) |
+| `make dbt-build` | construit et teste le silver dbt (`s3://lake/silver/`) |
+| `make dbt-freshness` | alerte si le bronze temps réel a plus de 10 min |
+| `make dbt-docs` | documentation dbt sur http://localhost:8081 |
 
 ## Structure
 
 ```
-src/star_pulse/   code Python (config, ingestion, streaming, common)
+src/star_pulse/   code Python (config, ingestion, streaming, transform, common)
 dbt/              projet dbt (bronze / silver / gold)
 orchestration/    définitions Dagster
 dashboard/        app Streamlit
@@ -106,7 +121,7 @@ La collecte respecte les sources : polling ≥ 30 s, User-Agent explicite, retri
 - [x] **Étape 1** — Ingestion GTFS théorique → bronze (checksum de contenu, idempotence)
 - [x] **Étape 2** — Producteur GTFS-RT → Redpanda (déduplication, producteur idempotent)
 - [x] **Étape 3** — Consumer Redpanda → Parquet sur MinIO (at-least-once, partitions date/heure)
-- [ ] **Étape 4** — dbt silver : rapprochement théorique / réel
+- [x] **Étape 4** — dbt silver : rapprochement théorique / réel
 - [ ] **Étape 5** — dbt gold : KPI de ponctualité
 - [ ] **Étape 6** — Orchestration Dagster
 - [ ] **Étape 7** — Dashboard Streamlit

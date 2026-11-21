@@ -1,0 +1,83 @@
+version: 2
+
+models:
+  - name: int_gtfs__versions
+    description: Période de validité [valid_from, valid_to) de chaque version du GTFS théorique.
+    columns:
+      - name: gtfs_version
+        data_tests: [unique, not_null]
+
+  - name: int_service_dates
+    description: Jours de circulation de chaque service (calendar + calendar_dates).
+    data_tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [gtfs_version, service_id, service_date]
+
+  - name: int_rt__stop_passages
+    description: >
+      Dernière prévision connue pour chaque passage (course, arrêt) vu dans le
+      temps réel, y compris les passages encore à venir.
+    columns:
+      - name: rt_passage_key
+        data_tests: [unique, not_null]
+      - name: passage_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [observed, skipped]
+
+  - name: int_stop_passages_matched
+    description: >
+      Table silver centrale (Parquet sur s3://lake/silver/) : chaque passage
+      révolu rapproché de son horaire théorique, avec le retard en secondes.
+    columns:
+      - name: passage_id
+        description: Hash de (service_date, trip_id, stop_sequence).
+        data_tests: [unique, not_null]
+      - name: rt_passage_key
+        data_tests: [unique]
+      - name: service_date
+        data_tests: [not_null]
+      - name: trip_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_gtfs__trips')
+                field: trip_id
+      - name: route_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_gtfs__routes')
+                field: route_id
+      - name: stop_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_gtfs__stops')
+                field: stop_id
+      - name: scheduled_at
+        data_tests: [not_null]
+      - name: passage_status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [observed, skipped]
+      - name: event_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [arrival, departure]
+      - name: delay_s
+        description: Retard en secondes (négatif = en avance), nul pour un arrêt supprimé.
+        data_tests:
+          - value_between:
+              arguments:
+                min_value: -1800
+                max_value: 5400
+              config:
+                severity: warn

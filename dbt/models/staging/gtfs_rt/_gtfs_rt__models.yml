@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_gtfs_rt__trip_updates
+    description: >
+      Une ligne par (version d'une course, arrêt prévu), dédoublonnée sur
+      (entity_key, entity_version). Les heures prévues sont absolues (UTC).
+    data_tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [entity_key, entity_version, update_index]
+    columns:
+      - name: trip_id
+        data_tests: [not_null]
+      - name: feed_at
+        data_tests: [not_null]
+      - name: stop_schedule_relationship
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [SCHEDULED, SKIPPED, NO_DATA]
+
+  - name: stg_gtfs_rt__vehicle_positions
+    description: Positions des véhicules, dédoublonnées sur (entity_key, entity_version).
+    data_tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [entity_key, entity_version]
+    columns:
+      - name: vehicle_id
+        data_tests: [not_null]

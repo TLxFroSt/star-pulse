@@ -30,6 +30,7 @@ tests/fixtures/**/*.zip
 dbt/target/
 dbt/dbt_packages/
 dbt/logs/
+dbt/.user.yml
 logs/
 
 # --- Dagster
