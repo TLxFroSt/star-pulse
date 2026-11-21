@@ -1,0 +1,30 @@
+# Configuration Streamlit du dashboard (`make dashboard`).
+# Thème clair et sobre : une couleur d'accent (bleu), encre quasi noire,
+# bordures fines. Les couleurs des graphiques sont fixées dans
+# src/star_pulse/dashboard/page.py.
+
+[theme]
+base = "light"
+primaryColor = "#2a78d6"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f4f4f1"
+textColor = "#0b0b0b"
+borderColor = "#e1e0d9"
+showWidgetBorder = true
+showSidebarBorder = true
+baseRadius = "0.5rem"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
+headingFontWeights = [700, 600, 600]
+metricValueFontSize = "2rem"
+metricValueFontWeight = 600
+chartCategoricalColors = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"]
+
+[theme.sidebar]
+backgroundColor = "#f9f9f7"
+secondaryBackgroundColor = "#ffffff"
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
