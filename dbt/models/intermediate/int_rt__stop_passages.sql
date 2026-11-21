@@ -5,12 +5,30 @@
 -- Un même trip_id peut circuler plusieurs jours : les instantanés d'une course
 -- séparés de plus de `rt_run_gap_hours` forment des « runs » distincts.
 --
--- Le flux STAR contient des courses figées (mise à jour vieille de plusieurs
--- heures, prévisions fausses d'un jour) : on les écarte.
-with updates as (
+-- Le flux STAR contient deux sortes de prévisions inexploitables, écartées :
+-- - courses figées : mise à jour vieille de plusieurs heures, prévisions
+--   fausses d'un jour ;
+-- - prévisions « plates » : tous les arrêts d'une course à la même heure
+--   (vu sur toutes les courses à venir d'un même service de véhicule).
+with fresh_updates as (
     select * from {{ ref('stg_gtfs_rt__trip_updates') }}
     where stop_id is not null
         and trip_update_at >= feed_at - interval {{ var('rt_max_update_age_minutes') }} minute
+),
+
+flat_versions as (
+    select entity_key, entity_version
+    from fresh_updates
+    where coalesce(predicted_arrival_at, predicted_departure_at) is not null
+    group by entity_key, entity_version
+    having count(*) >= 3
+        and count(distinct coalesce(predicted_arrival_at, predicted_departure_at)) = 1
+),
+
+updates as (
+    select *
+    from fresh_updates
+    where (entity_key, entity_version) not in (select (entity_key, entity_version) from flat_versions)
 ),
 
 watermark as (

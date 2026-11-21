@@ -17,6 +17,9 @@ constatées sur des données réelles :
   passer le lendemain matin, en même temps que les premières courses du jour suivant.
 - Le flux contient des courses « figées » : mise à jour vieille de plusieurs heures,
   prévisions décalées d'exactement un jour.
+- Il contient aussi des prévisions « plates » : tous les arrêts d'une course à la même
+  heure, publiées pour toutes les courses à venir d'un même service de véhicule
+  (jusqu'à 8 h d'« avance » si on les prenait au pied de la lettre).
 
 ## Décision
 
@@ -31,6 +34,8 @@ constatées sur des données réelles :
   antérieure au dernier instantané reçu).
 - **Courses figées écartées** : mise à jour de la course plus vieille que 30 min par
   rapport à l'instantané (`rt_max_update_age_minutes`).
+- **Prévisions plates écartées** : une version de course dont au moins 3 arrêts ont
+  tous la même heure prévue est ignorée.
 - **Runs** : les instantanés d'un même `trip_id` séparés de plus de 4 h sont des
   circulations distinctes (`rt_run_gap_hours`).
 - **Jour de service** : on teste le jour local de l'observation et la veille, on garde
