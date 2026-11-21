@@ -5,11 +5,15 @@ description = "Pipeline de data engineering mesurant la ponctualité du réseau 
 readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "boto3>=1.44.9",
+    "duckdb>=2.0.1",
+    "httpx>=0.28.1",
     "pydantic-settings>=2.16",
 ]
 
 [dependency-groups]
 dev = [
+    "boto3-stubs[s3]>=1.44.9",
     "mypy>=2.4",
     "pre-commit>=4.7",
     "pytest>=9.2",
@@ -55,7 +59,7 @@ warn_required_dynamic_aliases = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-ra --strict-markers"
+addopts = "-ra --strict-markers -m 'not integration'"
 markers = [
     "integration: tests nécessitant l'infra Docker (make up)",
 ]

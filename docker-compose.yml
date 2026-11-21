@@ -63,7 +63,7 @@ services:
       start_period: 10s
 
   minio:
-    image: quay.io/minio/minio:RELEASE.2024-10-13T13-34-11Z
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z
     container_name: star-pulse-minio
     command: server /data --console-address ":9001"
     environment:
@@ -85,7 +85,7 @@ services:
   # Idempotent grâce à --ignore-existing. Pas de healthcheck : un conteneur
   # qui se termine n'a pas d'état « healthy », c'est son code de sortie qui fait foi.
   minio-init:
-    image: quay.io/minio/mc:RELEASE.2024-10-08T09-37-26Z
+    image: pgsty/mc:RELEASE.2026-11-12T00-00-00Z
     container_name: star-pulse-minio-init
     depends_on:
       minio:

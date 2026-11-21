@@ -51,3 +51,6 @@ Thumbs.db
 
 # --- Claude Code (réglages perso)
 .claude/settings.local.json
+
+# --- Contexte Claude Code (local uniquement)
+CLAUDE.md

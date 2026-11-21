@@ -43,6 +43,9 @@ class Settings(BaseSettings):
     s3_bucket: str = "lake"
 
     # --- Sources open data
+    gtfs_static_url: HttpUrl = HttpUrl(
+        "https://eu.ftp.opendatasoft.com/star/gtfs/GTFS_STAR_BUS_METRO_EN_COURS.zip"
+    )
     gtfs_rt_trip_updates_url: HttpUrl = HttpUrl(
         "https://proxy.transport.data.gouv.fr/resource/star-rennes-integration-gtfs-rt-trip-update"
     )
@@ -53,7 +56,7 @@ class Settings(BaseSettings):
         "https://proxy.transport.data.gouv.fr/resource/star-rennes-integration-gtfs-rt-alerts"
     )
     http_user_agent: str = "star-pulse/0.1 (projet portfolio open data)"
-    http_timeout_s: float = Field(default=10.0, gt=0)
+    http_timeout_s: float = Field(default=60.0, gt=0)
     # Respect des sources : jamais plus d'un appel toutes les 30 s par flux.
     poll_interval_s: int = Field(default=30, ge=30)
 

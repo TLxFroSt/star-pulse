@@ -15,6 +15,9 @@ le tout sur un laptop, à coût zéro, avec une architecture transposable dans l
 - **MinIO** comme stockage objet : API S3 compatible, donc le code d'écriture Parquet sera le
   même vers ADLS Gen2 / S3 plus tard. Un bucket unique `lake` avec préfixes
   `bronze/`, `silver/`, `gold/`.
+  Les images officielles `minio/minio` et `minio/mc` ne sont plus publiées sur Docker Hub ;
+  on utilise le fork communautaire `pgsty/minio` / `pgsty/mc` (Pigsty), même binaire et même
+  API, maintenu à jour. Tags figés dans `docker-compose.yml`.
 - **DuckDB + dbt-duckdb** pour les transformations : SQL analytique rapide sur Parquet sans
   cluster ; les modèles dbt restent portables vers Databricks / Spark.
 - **Dagster** pour l'orchestration : modèle par *assets* aligné sur les couches du lakehouse,

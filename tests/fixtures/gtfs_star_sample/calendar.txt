@@ -1,0 +1,5 @@
+service_id,monday,tuesday,wednesday,thursday,friday,saturday,sunday,start_date,end_date
+gen-0d30012820,1,0,0,0,0,0,0,20261116,20261214
+gen-344e6c6627,0,0,0,1,0,0,0,20261119,20261217
+prog-00000000009,1,0,0,0,0,0,0,20261116,20261221
+prog-00000000010,0,1,0,0,0,0,0,20261117,20261222

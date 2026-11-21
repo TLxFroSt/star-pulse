@@ -8,7 +8,7 @@ dashboard.
 Tout tourne en local avec Docker Compose, à coût zéro, sur des données open data sans
 authentification.
 
-> Statut : **Étape 0 — squelette du projet.** Voir la [feuille de route](#feuille-de-route).
+> Statut : **Étape 1 — ingestion du GTFS théorique en bronze.** Voir la [feuille de route](#feuille-de-route).
 
 ## Architecture
 
@@ -55,6 +55,13 @@ make lint && make test
 
 `make down` arrête l'infra (les volumes sont conservés).
 
+Première ingestion :
+
+```bash
+make ingest-gtfs   # télécharge le GTFS STAR et l'écrit en bronze (Parquet + zip brut)
+make ingest-gtfs   # relance : « GTFS inchangé (ETag) », rien n'est réécrit
+```
+
 ## Commandes
 
 | Commande | Effet |
@@ -62,7 +69,9 @@ make lint && make test
 | `make up` / `make down` | démarre / arrête l'infra Docker |
 | `make lint` | `ruff check` + `ruff format --check` + `mypy --strict` |
 | `make fmt` | formatage automatique |
-| `make test` | `pytest` |
+| `make test` | tests unitaires (`pytest`) |
+| `make test-integration` | tests d'intégration contre MinIO (après `make up`) |
+| `make ingest-gtfs` | ingère le GTFS théorique STAR dans `s3://lake/bronze/gtfs_static/` |
 
 ## Structure
 
@@ -85,7 +94,7 @@ La collecte respecte les sources : polling ≥ 30 s, User-Agent explicite, retri
 ## Feuille de route
 
 - [x] **Étape 0** — Squelette : arborescence, uv, Docker Compose, Makefile, pre-commit, smoke test
-- [ ] **Étape 1** — Ingestion GTFS théorique → bronze
+- [x] **Étape 1** — Ingestion GTFS théorique → bronze (checksum de contenu, idempotence)
 - [ ] **Étape 2** — Producteur GTFS-RT → Redpanda
 - [ ] **Étape 3** — Consumer Redpanda → Parquet sur MinIO
 - [ ] **Étape 4** — dbt silver : rapprochement théorique / réel

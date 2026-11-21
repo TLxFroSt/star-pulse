@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 UV ?= uv
 
-.PHONY: help install up down lint fmt test
+.PHONY: help install up down lint fmt test test-integration ingest-gtfs
 
 help: ## Affiche cette aide
 	@grep -E '^[a-z]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  %-10s %s\n", $$1, $$2}'
@@ -28,3 +28,9 @@ fmt: ## Formate et corrige automatiquement
 
 test: ## Lance les tests pytest
 	$(UV) run pytest
+
+test-integration: ## Tests d'intégration (nécessite `make up`)
+	$(UV) run pytest -m integration
+
+ingest-gtfs: ## Ingère le GTFS théorique STAR dans bronze (MinIO)
+	$(UV) run python -m star_pulse.ingestion.gtfs_static
