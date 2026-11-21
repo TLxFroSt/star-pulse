@@ -1,0 +1,12 @@
+# Instance Dagster locale (DAGSTER_HOME=orchestration, voir `make dagster`).
+# L'historique des runs est stocké à côté de ce fichier (ignoré par Git).
+
+telemetry:
+  enabled: false
+
+concurrency:
+  runs:
+    # DuckDB n'accepte qu'un écrivain : une seule exécution dbt à la fois.
+    tag_concurrency_limits:
+      - key: star_pulse/duckdb
+        limit: 1

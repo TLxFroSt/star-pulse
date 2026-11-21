@@ -1,5 +1,6 @@
 """Accès au stockage objet du lakehouse (MinIO / S3), derrière une interface testable."""
 
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Protocol
 
 import boto3
@@ -33,12 +34,17 @@ class ObjectStore(Protocol):
         """Liste les clés commençant par `prefix`, triées."""
         ...
 
+    def latest_modified(self, prefix: str) -> datetime | None:
+        """Date de dernière écriture (UTC) parmi les objets sous `prefix`, ou None."""
+        ...
+
 
 class InMemoryObjectStore:
     """Implémentation en mémoire, pour les tests unitaires."""
 
     def __init__(self) -> None:
         self.objects: dict[str, bytes] = {}
+        self.modified: dict[str, datetime] = {}
 
     def exists(self, key: str) -> bool:
         return key in self.objects
@@ -50,9 +56,14 @@ class InMemoryObjectStore:
         self, key: str, data: bytes, *, content_type: str = "application/octet-stream"
     ) -> None:
         self.objects[key] = data
+        self.modified[key] = datetime.now(UTC)
 
     def list_keys(self, prefix: str) -> list[str]:
         return sorted(k for k in self.objects if k.startswith(prefix))
+
+    def latest_modified(self, prefix: str) -> datetime | None:
+        dates = [d for k, d in self.modified.items() if k.startswith(prefix)]
+        return max(dates, default=None)
 
 
 class S3ObjectStore:
@@ -106,3 +117,13 @@ class S3ObjectStore:
         for page in paginator.paginate(Bucket=self._bucket, Prefix=prefix):
             keys.extend(obj["Key"] for obj in page.get("Contents", []) if "Key" in obj)
         return sorted(keys)
+
+    def latest_modified(self, prefix: str) -> datetime | None:
+        latest: datetime | None = None
+        paginator = self._client.get_paginator("list_objects_v2")
+        for page in paginator.paginate(Bucket=self._bucket, Prefix=prefix):
+            for obj in page.get("Contents", []):
+                modified = obj.get("LastModified")
+                if modified is not None and (latest is None or modified > latest):
+                    latest = modified
+        return latest

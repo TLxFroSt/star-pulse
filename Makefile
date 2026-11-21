@@ -2,7 +2,7 @@
 UV ?= uv
 
 .PHONY: help install up down lint fmt test test-integration ingest-gtfs produce-rt consume-rt \
-	dbt-build dbt-freshness dbt-docs
+	dbt-build dbt-freshness dbt-docs dagster
 
 help: ## Affiche cette aide
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  %-16s %s\n", $$1, $$2}'
@@ -51,3 +51,6 @@ dbt-freshness: ## Vérifie la fraîcheur du bronze temps réel
 dbt-docs: ## Génère et sert la documentation dbt (http://localhost:8081)
 	$(UV) run python -m star_pulse.transform.dbt_runner docs generate
 	$(UV) run python -m star_pulse.transform.dbt_runner docs serve --port 8081
+
+dagster: ## Lance Dagster (UI, schedules, sensor) sur http://localhost:3000
+	DAGSTER_HOME="$(CURDIR)/orchestration" $(UV) run dagster dev -m star_pulse.orchestration.definitions -p 3000

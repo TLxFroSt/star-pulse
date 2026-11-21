@@ -86,6 +86,17 @@ heure, par arrêt et jour, plus les dimensions `dim_routes` / `dim_stops`. Un pa
 est « à l'heure » si son retard est entre −1 min et +3 min ; définitions complètes
 dans [l'ADR 0006](docs/adr/0006-kpi-ponctualite.md).
 
+Orchestration :
+
+```bash
+make dagster       # http://localhost:3000 — lignage, schedules, sensor, asset checks
+```
+
+Dagster ingère le GTFS chaque nuit, reconstruit silver et gold toutes les 15 min (et
+dès qu'une nouvelle version GTFS arrive) et contrôle la fraîcheur du temps réel. Le
+producteur et le consumer restent lancés à part (`make produce-rt` / `make consume-rt`),
+voir [l'ADR 0007](docs/adr/0007-orchestration-dagster.md).
+
 ## Commandes
 
 | Commande | Effet |
@@ -101,13 +112,14 @@ dans [l'ADR 0006](docs/adr/0006-kpi-ponctualite.md).
 | `make dbt-build` | construit et teste le silver et le gold dbt (`s3://lake/silver/`, `s3://lake/gold/`) |
 | `make dbt-freshness` | alerte si le bronze temps réel a plus de 10 min |
 | `make dbt-docs` | documentation dbt sur http://localhost:8081 |
+| `make dagster` | interface Dagster sur http://localhost:3000 (schedules et sensor actifs) |
 
 ## Structure
 
 ```
-src/star_pulse/   code Python (config, ingestion, streaming, transform, common)
+src/star_pulse/   code Python (config, ingestion, streaming, transform, orchestration, common)
 dbt/              projet dbt (bronze / silver / gold)
-orchestration/    définitions Dagster
+orchestration/    instance Dagster locale (dagster.yaml)
 dashboard/        app Streamlit
 infra/terraform/  bonus : déploiement Azure
 docs/adr/         Architecture Decision Records
@@ -128,6 +140,6 @@ La collecte respecte les sources : polling ≥ 30 s, User-Agent explicite, retri
 - [x] **Étape 3** — Consumer Redpanda → Parquet sur MinIO (at-least-once, partitions date/heure)
 - [x] **Étape 4** — dbt silver : rapprochement théorique / réel
 - [x] **Étape 5** — dbt gold : KPI de ponctualité
-- [ ] **Étape 6** — Orchestration Dagster
+- [x] **Étape 6** — Orchestration Dagster
 - [ ] **Étape 7** — Dashboard Streamlit
 - [ ] **Étape 8** — CI GitHub Actions, README complet, ADR

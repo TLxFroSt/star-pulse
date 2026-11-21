@@ -35,7 +35,9 @@ logs/
 
 # --- Dagster
 .dagster/
-orchestration/.dagster_home/
+.tmp_dagster_home_*/
+orchestration/*
+!orchestration/dagster.yaml
 
 # --- Terraform
 infra/terraform/.terraform/
