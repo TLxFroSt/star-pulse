@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git tag:*)",
+      "Bash(git rebase:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git remote:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh release:*)",
+      "Bash(gh issue:*)",
+      "Bash(gh api:*)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ],
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(make lint)",
+      "Bash(make test)",
+      "Bash(make fmt)",
+      "Bash(uv run:*)",
+      "Bash(uv add:*)",
+      "Bash(uv sync:*)"
+    ]
+  }
+}

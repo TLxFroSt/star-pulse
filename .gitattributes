@@ -1,0 +1,8 @@
+# Fins de ligne LF partout (Docker, Makefile et scripts shell les exigent)
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.zip binary
+*.pb binary
+*.parquet binary

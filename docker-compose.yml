@@ -1,0 +1,110 @@
+# Infra locale STAR Pulse : bus de messages (Redpanda) + stockage objet (MinIO).
+# Démarrage : `make up`. Les identifiants viennent de `.env` (voir `.env.example`).
+name: star-pulse
+
+services:
+  redpanda:
+    image: redpandadata/redpanda:v24.2.7
+    container_name: star-pulse-redpanda
+    command:
+      - redpanda
+      - start
+      - --mode=dev-container
+      - --smp=1
+      - --memory=1G
+      - --kafka-addr=internal://0.0.0.0:9092,external://0.0.0.0:19092
+      - --advertise-kafka-addr=internal://redpanda:9092,external://localhost:19092
+      - --pandaproxy-addr=internal://0.0.0.0:8082,external://0.0.0.0:18082
+      - --advertise-pandaproxy-addr=internal://redpanda:8082,external://localhost:18082
+      - --schema-registry-addr=internal://0.0.0.0:8081,external://0.0.0.0:18081
+      - --rpc-addr=redpanda:33145
+      - --advertise-rpc-addr=redpanda:33145
+    ports:
+      - "19092:19092"   # Kafka (clients hors Docker)
+      - "18081:18081"   # Schema Registry
+      - "18082:18082"   # HTTP Proxy
+      - "19644:9644"    # Admin API
+    volumes:
+      - redpanda-data:/var/lib/redpanda/data
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health | grep -E 'Healthy:.+true' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  redpanda-console:
+    image: redpandadata/console:v2.7.2
+    container_name: star-pulse-redpanda-console
+    entrypoint: /bin/sh
+    command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml && /app/console'
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["redpanda:9092"]
+          schemaRegistry:
+            enabled: true
+            urls: ["http://redpanda:8081"]
+        redpanda:
+          adminApi:
+            enabled: true
+            urls: ["http://redpanda:9644"]
+    ports:
+      - "8080:8080"
+    depends_on:
+      redpanda:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8080/admin/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  minio:
+    image: quay.io/minio/minio:RELEASE.2024-10-13T13-34-11Z
+    container_name: star-pulse-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${STAR_PULSE_S3_ACCESS_KEY:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${STAR_PULSE_S3_SECRET_KEY:-minioadmin}
+    ports:
+      - "9000:9000"   # API S3
+      - "9001:9001"   # Console web
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # Service ponctuel : crée le bucket du lakehouse puis s'arrête (exit 0).
+  # Idempotent grâce à --ignore-existing. Pas de healthcheck : un conteneur
+  # qui se termine n'a pas d'état « healthy », c'est son code de sortie qui fait foi.
+  minio-init:
+    image: quay.io/minio/mc:RELEASE.2024-10-08T09-37-26Z
+    container_name: star-pulse-minio-init
+    depends_on:
+      minio:
+        condition: service_healthy
+    environment:
+      S3_ACCESS_KEY: ${STAR_PULSE_S3_ACCESS_KEY:-minioadmin}
+      S3_SECRET_KEY: ${STAR_PULSE_S3_SECRET_KEY:-minioadmin}
+      S3_BUCKET: ${STAR_PULSE_S3_BUCKET:-lake}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        set -e
+        mc alias set local http://minio:9000 "$$S3_ACCESS_KEY" "$$S3_SECRET_KEY"
+        mc mb --ignore-existing "local/$$S3_BUCKET"
+        mc ls "local/$$S3_BUCKET" > /dev/null
+        echo "Bucket $$S3_BUCKET prêt."
+    restart: "no"
+
+volumes:
+  redpanda-data:
+  minio-data:

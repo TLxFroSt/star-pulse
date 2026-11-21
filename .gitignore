@@ -1,0 +1,53 @@
+# --- Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+
+# --- Outils
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Secrets
+.env
+.env.*
+!.env.example
+
+# --- Données locales (jamais dans Git)
+data/
+*.parquet
+*.duckdb
+*.duckdb.wal
+tests/fixtures/**/*.zip
+!tests/fixtures/**/*.pb
+
+# --- dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+logs/
+
+# --- Dagster
+.dagster/
+orchestration/.dagster_home/
+
+# --- Terraform
+infra/terraform/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+
+# --- Éditeurs / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# --- Claude Code (réglages perso)
+.claude/settings.local.json
