@@ -39,13 +39,6 @@ logs/
 orchestration/*
 !orchestration/dagster.yaml
 
-# --- Terraform
-infra/terraform/.terraform/
-*.tfstate
-*.tfstate.*
-*.tfvars
-!*.tfvars.example
-
 # --- Éditeurs / OS
 .idea/
 .vscode/

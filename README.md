@@ -234,7 +234,6 @@ retries avec backoff.
 - [x] **Étape 6** — Orchestration Dagster
 - [x] **Étape 7** — Dashboard Streamlit
 - [x] **Étape 8** — CI GitHub Actions, jeu de démo, README, ADR
-- [ ] **Bonus** — Déploiement Azure (Terraform)
 
 ## Auteur
 
