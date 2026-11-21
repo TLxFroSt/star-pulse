@@ -1,0 +1,88 @@
+# CI STAR Pulse : qualité du code, puis pipeline de bout en bout sur le jeu de démo.
+# Décisions : docs/adr/0008-ci-et-jeu-de-demo.md
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  STAR_PULSE_ENVIRONMENT: ci
+  # Pas de .env en CI : identifiants MinIO par défaut (minioadmin), comme docker-compose.yml.
+
+jobs:
+  quality:
+    name: Lint, types et tests unitaires
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.4.0
+        with:
+          enable-cache: true
+
+      - name: Dépendances (uv.lock à jour exigé)
+        run: uv sync --locked
+
+      - name: Ruff (lint)
+        run: uv run ruff check --output-format=github .
+
+      - name: Ruff (format)
+        run: uv run ruff format --check .
+
+      - name: Mypy (strict)
+        run: uv run mypy
+
+      - name: Tests unitaires
+        run: uv run pytest
+
+  pipeline:
+    name: Intégration et dbt build sur la démo
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.4.0
+        with:
+          enable-cache: true
+
+      - name: Dépendances
+        run: uv sync --locked
+
+      - name: Infra (Redpanda, MinIO et bucket)
+        run: |
+          docker compose up -d --wait redpanda minio
+          docker compose run --rm minio-init
+
+      # Un test sauté faute d'infra échoue en CI (tests/integration/conftest.py).
+      - name: Tests d'intégration
+        run: uv run pytest -m integration
+
+      - name: Jeu de démo en bronze puis dbt build (modèles et tests dbt)
+        run: make demo
+
+      - name: Logs de l'infra
+        if: failure()
+        run: docker compose logs --no-color --tail=200
+
+      - name: Logs et résultats dbt
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: dbt-logs
+          path: |
+            dbt/logs/
+            dbt/target/run_results.json
+          if-no-files-found: ignore
+          retention-days: 7

@@ -1,0 +1,14 @@
+stop_id,stop_code,stop_name,stop_desc,stop_lat,stop_lon,zone_id,stop_url,location_type,parent_station,wheelchair_boarding
+D100,100,Gare,Rennes,48.106000,-1.680000,,,0,,1
+D101,101,Les Prairies,Rennes,48.118000,-1.715000,,,0,,1
+D102,102,Moulin Neuf,Rennes,48.115000,-1.704000,,,0,,1
+D103,103,Champ de Foire,Rennes,48.111000,-1.693000,,,0,,1
+D104,104,Hôtel de Ville,Rennes,48.109000,-1.668000,,,0,,1
+D105,105,Médiathèque,Rennes,48.112000,-1.656000,,,0,,1
+D106,106,Université,Rennes,48.117000,-1.643000,,,0,,1
+D201,201,Hôpital,Rennes,48.088000,-1.688000,,,0,,1
+D202,202,Les Tilleuls,Rennes,48.096000,-1.685000,,,0,,1
+D203,203,Marché,Rennes,48.115000,-1.679000,,,0,,1
+D204,204,Lycée,Rennes,48.124000,-1.677000,,,0,,1
+D205,205,Zone Artisanale,Rennes,48.132000,-1.674000,,,0,,1
+D206,206,Parc des Sports,Rennes,48.140000,-1.670000,,,0,,1

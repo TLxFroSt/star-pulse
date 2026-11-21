@@ -1,0 +1,5 @@
+service_id,date,exception_type
+SEM,20261225,2
+WE,20261225,1
+SEM,20270101,2
+WE,20270101,1

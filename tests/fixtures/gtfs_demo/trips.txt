@@ -1,0 +1,189 @@
+route_id,service_id,trip_id,trip_headsign,direction_id,block_id,shape_id,wheelchair_accessible
+DEMO-A,SEM,A-SEM-0-0600,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-0630,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-0700,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-0730,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-0800,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-0830,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-0900,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-0930,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1000,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1030,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1100,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1130,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1200,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1230,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1300,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1330,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1400,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1430,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1500,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1530,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1600,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1630,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1700,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1730,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1800,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1830,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1900,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-1930,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-2000,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-2030,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-2100,Université,0,,,1
+DEMO-A,SEM,A-SEM-0-2130,Université,0,,,1
+DEMO-A,WE,A-WE-0-0700,Université,0,,,1
+DEMO-A,WE,A-WE-0-0800,Université,0,,,1
+DEMO-A,WE,A-WE-0-0900,Université,0,,,1
+DEMO-A,WE,A-WE-0-1000,Université,0,,,1
+DEMO-A,WE,A-WE-0-1100,Université,0,,,1
+DEMO-A,WE,A-WE-0-1200,Université,0,,,1
+DEMO-A,WE,A-WE-0-1300,Université,0,,,1
+DEMO-A,WE,A-WE-0-1400,Université,0,,,1
+DEMO-A,WE,A-WE-0-1500,Université,0,,,1
+DEMO-A,WE,A-WE-0-1600,Université,0,,,1
+DEMO-A,WE,A-WE-0-1700,Université,0,,,1
+DEMO-A,WE,A-WE-0-1800,Université,0,,,1
+DEMO-A,WE,A-WE-0-1900,Université,0,,,1
+DEMO-A,WE,A-WE-0-2000,Université,0,,,1
+DEMO-A,WE,A-WE-0-2100,Université,0,,,1
+DEMO-A,SEM,A-SEM-1-0600,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-0630,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-0700,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-0730,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-0800,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-0830,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-0900,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-0930,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1000,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1030,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1100,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1130,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1200,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1230,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1300,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1330,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1400,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1430,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1500,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1530,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1600,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1630,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1700,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1730,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1800,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1830,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1900,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-1930,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-2000,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-2030,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-2100,Les Prairies,1,,,1
+DEMO-A,SEM,A-SEM-1-2130,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-0700,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-0800,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-0900,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1000,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1100,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1200,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1300,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1400,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1500,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1600,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1700,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1800,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-1900,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-2000,Les Prairies,1,,,1
+DEMO-A,WE,A-WE-1-2100,Les Prairies,1,,,1
+DEMO-B,SEM,B-SEM-0-0600,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-0630,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-0700,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-0730,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-0800,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-0830,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-0900,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-0930,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1000,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1030,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1100,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1130,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1200,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1230,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1300,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1330,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1400,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1430,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1500,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1530,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1600,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1630,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1700,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1730,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1800,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1830,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1900,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-1930,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-2000,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-2030,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-2100,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-0-2130,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-0700,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-0800,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-0900,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1000,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1100,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1200,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1300,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1400,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1500,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1600,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1700,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1800,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-1900,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-2000,Parc des Sports,0,,,1
+DEMO-B,WE,B-WE-0-2100,Parc des Sports,0,,,1
+DEMO-B,SEM,B-SEM-1-0600,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-0630,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-0700,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-0730,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-0800,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-0830,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-0900,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-0930,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1000,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1030,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1100,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1130,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1200,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1230,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1300,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1330,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1400,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1430,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1500,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1530,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1600,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1630,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1700,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1730,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1800,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1830,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1900,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-1930,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-2000,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-2030,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-2100,Hôpital,1,,,1
+DEMO-B,SEM,B-SEM-1-2130,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-0700,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-0800,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-0900,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1000,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1100,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1200,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1300,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1400,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1500,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1600,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1700,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1800,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-1900,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-2000,Hôpital,1,,,1
+DEMO-B,WE,B-WE-1-2100,Hôpital,1,,,1

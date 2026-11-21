@@ -2,7 +2,10 @@
 UV ?= uv
 
 .PHONY: help install up down lint fmt test test-integration ingest-gtfs produce-rt consume-rt \
-	dbt-build dbt-freshness dbt-docs dagster dashboard
+	dbt-build dbt-freshness dbt-docs dagster dashboard demo demo-dashboard
+
+# Démo : bucket MinIO et base DuckDB dédiés, jamais mélangés aux données réelles.
+DEMO_ENV = STAR_PULSE_S3_BUCKET=demo STAR_PULSE_DUCKDB_PATH=data/demo.duckdb
 
 help: ## Affiche cette aide
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  %-16s %s\n", $$1, $$2}'
@@ -42,7 +45,7 @@ produce-rt: ## Lance le producteur GTFS-RT vers Redpanda (Ctrl+C pour arrêter)
 consume-rt: ## Consomme Redpanda et écrit le Parquet bronze sur MinIO (Ctrl+C pour arrêter)
 	$(UV) run python -m star_pulse.streaming.bronze_writer
 
-dbt-build: ## Construit et teste le silver dbt (bronze MinIO -> silver)
+dbt-build: ## Construit et teste silver et gold avec dbt (bronze MinIO -> silver -> gold)
 	$(UV) run python -m star_pulse.transform.dbt_runner build
 
 dbt-freshness: ## Vérifie la fraîcheur du bronze temps réel
@@ -57,3 +60,10 @@ dagster: ## Lance Dagster (UI, schedules, sensor) sur http://localhost:3000
 
 dashboard: ## Lance le dashboard Streamlit sur http://localhost:8501
 	$(UV) run streamlit run dashboard/app.py --browser.gatherUsageStats false
+
+demo: ## Démo sans attendre la collecte : réseau fictif + temps réel simulé, puis dbt build
+	$(DEMO_ENV) $(UV) run python -m star_pulse.demo
+	$(DEMO_ENV) $(UV) run python -m star_pulse.transform.dbt_runner build
+
+demo-dashboard: ## Dashboard sur les données de démo (http://localhost:8501)
+	$(DEMO_ENV) $(UV) run streamlit run dashboard/app.py --browser.gatherUsageStats false
