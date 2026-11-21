@@ -8,7 +8,7 @@ dashboard.
 Tout tourne en local avec Docker Compose, à coût zéro, sur des données open data sans
 authentification.
 
-> Statut : **Étape 1 — ingestion du GTFS théorique en bronze.** Voir la [feuille de route](#feuille-de-route).
+> Statut : **Étape 2 — producteur GTFS-RT vers Redpanda.** Voir la [feuille de route](#feuille-de-route).
 
 ## Architecture
 
@@ -62,6 +62,12 @@ make ingest-gtfs   # télécharge le GTFS STAR et l'écrit en bronze (Parquet + 
 make ingest-gtfs   # relance : « GTFS inchangé (ETag) », rien n'est réécrit
 ```
 
+Temps réel :
+
+```bash
+make produce-rt    # Ctrl+C pour arrêter ; messages visibles sur http://localhost:8080
+```
+
 ## Commandes
 
 | Commande | Effet |
@@ -72,6 +78,7 @@ make ingest-gtfs   # relance : « GTFS inchangé (ETag) », rien n'est réécrit
 | `make test` | tests unitaires (`pytest`) |
 | `make test-integration` | tests d'intégration contre MinIO (après `make up`) |
 | `make ingest-gtfs` | ingère le GTFS théorique STAR dans `s3://lake/bronze/gtfs_static/` |
+| `make produce-rt` | interroge les flux GTFS-RT toutes les 30 s et publie sur Redpanda |
 
 ## Structure
 
@@ -95,7 +102,7 @@ La collecte respecte les sources : polling ≥ 30 s, User-Agent explicite, retri
 
 - [x] **Étape 0** — Squelette : arborescence, uv, Docker Compose, Makefile, pre-commit, smoke test
 - [x] **Étape 1** — Ingestion GTFS théorique → bronze (checksum de contenu, idempotence)
-- [ ] **Étape 2** — Producteur GTFS-RT → Redpanda
+- [x] **Étape 2** — Producteur GTFS-RT → Redpanda (déduplication, producteur idempotent)
 - [ ] **Étape 3** — Consumer Redpanda → Parquet sur MinIO
 - [ ] **Étape 4** — dbt silver : rapprochement théorique / réel
 - [ ] **Étape 5** — dbt gold : KPI de ponctualité

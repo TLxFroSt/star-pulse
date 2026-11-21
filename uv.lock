@@ -151,6 +151,20 @@ wheels = [
 ]
 
 [[package]]
+name = "confluent-kafka"
+version = "2.16.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/23/bd/292fda1e0c21ff9b1223646ed73d0ec9133bf2d192927da15ccfbbc0fd22/confluent_kafka-2.16.2.tar.gz", hash = "sha256:18e15d76d1e43fb80c4574dc0ecb7aa5f7e6cfb72de6ef8340ca02f81fbd7b89", size = 453761, upload-time = "2026-11-18T05:00:45.758Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/5a/d6/e8212584d46718fb10621c8fc890365d8c9f8be3f58d2e85c8f46973c9d1/confluent_kafka-2.16.2-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:6183e0e6edae78f7aaa6d02b29c6043e8259ba04a389e7e00d7a66028d8cb561", size = 4533144, upload-time = "2026-11-18T04:59:35.773Z" },
+    { url = "https://files.pythonhosted.org/packages/82/f0/27f99b1d57cbcb63752a6df13a2067e31a7d4baea02e1653862d13c14e99/confluent_kafka-2.16.2-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:9d047e8689754922d192687dc9ac2901992fde411ccd96a890e9ac940652eecd", size = 4502179, upload-time = "2026-11-18T04:59:37.205Z" },
+    { url = "https://files.pythonhosted.org/packages/5a/8b/52c03fe78dc25230057900860bc3d4c404245d00b11bccef88273430f427/confluent_kafka-2.16.2-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:27784bfe54fa5c2b5eb1a2214f8ec8462e15ec21dda7bf69c67b3d77621c9b19", size = 5152127, upload-time = "2026-11-18T04:59:38.851Z" },
+    { url = "https://files.pythonhosted.org/packages/16/54/898f219d89be74e7f7b7111cfb71dfa4641bf481665e3b240a56ec045875/confluent_kafka-2.16.2-cp312-cp312-manylinux_2_28_s390x.whl", hash = "sha256:ef03fbce43e4c6b66ca9395bd077645d219e41a125abc1c70079b049c6bb3305", size = 6118478, upload-time = "2026-11-18T04:59:40.396Z" },
+    { url = "https://files.pythonhosted.org/packages/d9/bf/787b155457daba2f1b0430d30ee8f24b21479559a065b93531216600472c/confluent_kafka-2.16.2-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:ecbbe58ddc8a1c9cbcdb1db33ba2d8865c539f2fd8ffd2668900672b8df0aca8", size = 4963493, upload-time = "2026-11-18T04:59:42Z" },
+    { url = "https://files.pythonhosted.org/packages/a6/b2/76d3a7439fb382a7a4c3ec90af579b0ff3ccf4630c21284ad10af04fa937/confluent_kafka-2.16.2-cp312-cp312-win_amd64.whl", hash = "sha256:62e4f21e05340b10bb36fbf10e2a5ebc068a60de8cbe66739ba8d6b543b88ba3", size = 4710293, upload-time = "2026-11-18T04:59:43.413Z" },
+]
+
+[[package]]
 name = "distlib"
 version = "0.4.4"
 source = { registry = "https://pypi.org/simple" }
@@ -181,6 +195,18 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/52/aa/8ccff8da9a27e089727fcffd3c5b61708383217e47eb1e1b8af37b1dd166/filelock-4.2.12.tar.gz", hash = "sha256:7e7da24d3ac39268b0f156e56870001de44886318f092f9d851e692f7114d6dd", size = 680837, upload-time = "2026-11-18T01:20:03.951Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8a/c9/eb6b6528c7edb958d4c24ac47a8b94113d9de36e4cfc6eecd599b1a4f349/filelock-4.2.12-py3-none-any.whl", hash = "sha256:21decfec02f116ed4c954433cdb31f28c3b346b784543177b6d7059da2702ee9", size = 222442, upload-time = "2026-11-18T01:20:02.439Z" },
+]
+
+[[package]]
+name = "gtfs-realtime-bindings"
+version = "3.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "protobuf" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/17/5e/910d71a3902aa1746ca330cb4256d4afd4adf2c4951aeca840ae4973e465/gtfs_realtime_bindings-3.0.0.tar.gz", hash = "sha256:bfa7426ed537b374bbfe410a99e788cdef1b7009fe1e5aae2e3e0bc9fdca7d73", size = 12776, upload-time = "2026-09-17T17:57:39.263Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/76/49/91d41718731b8c4d8d60bad8c69fc3f7626068b7b137819b389d187101e1/gtfs_realtime_bindings-3.0.0-py3-none-any.whl", hash = "sha256:a270f236e92c13dd1d633492bcee397dcc2361d83cdcc19f9c94fb7c0082ed8b", size = 11875, upload-time = "2026-09-17T17:57:38.114Z" },
 ]
 
 [[package]]
@@ -384,6 +410,21 @@ wheels = [
 ]
 
 [[package]]
+name = "protobuf"
+version = "7.36.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d9/89/5b8517baa72f84a67b8a307ba953c91057af618bf40bf676f3c03551f8f0/protobuf-7.36.2.tar.gz", hash = "sha256:497d0463ff3316681da6c0b9e8d06cb465d61abce00b613ab42226175644d1bb", size = 512737, upload-time = "2026-09-17T20:07:59.326Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/32/72/98342feb672507c8f3a69e34b4fa8961f608edba5c1a48a6f47156d92cb5/protobuf-7.36.2-cp310-abi3-macosx_10_9_universal2.whl", hash = "sha256:cbc70b17ee27e28894c7fee8bb04be1abead49e936bc70eb60052531eee2079e", size = 456039, upload-time = "2026-09-17T20:07:51.542Z" },
+    { url = "https://files.pythonhosted.org/packages/b6/ea/91fdf7c2b8bbd49cde056f00a9df6773532987e1c00fe2830b895af95c7e/protobuf-7.36.2-cp310-abi3-manylinux2014_aarch64.whl", hash = "sha256:e11e1f0180583a2af89db6a2ecd9e8dc40aa6d2988ca175bfd0e6d12ea72d74e", size = 344219, upload-time = "2026-09-17T20:07:52.914Z" },
+    { url = "https://files.pythonhosted.org/packages/17/ab/5fd5f8ece73fad885c5a09aa849b32d70472f954ba3a92d3bb5974ea953b/protobuf-7.36.2-cp310-abi3-manylinux2014_s390x.whl", hash = "sha256:f4fee11ec330d238b34a05c9b675f693c20415d1c5bd7d5320cc2f8a798eb9cf", size = 357223, upload-time = "2026-09-17T20:07:53.985Z" },
+    { url = "https://files.pythonhosted.org/packages/db/f3/3996583dd2906297a637af12114deddf7658af6e683fedb83be061983fb5/protobuf-7.36.2-cp310-abi3-manylinux2014_x86_64.whl", hash = "sha256:89f23aa53c24553a2416fd4fd1ec06f74fa42b14b546d8883128813f775bbfd2", size = 343223, upload-time = "2026-09-17T20:07:54.931Z" },
+    { url = "https://files.pythonhosted.org/packages/fc/1b/dcc64f358fcb51811b58ae40b3d28f820725f116d86487cc20bd4b130701/protobuf-7.36.2-cp310-abi3-win32.whl", hash = "sha256:912c1221170e16c08d1f086762f563dd61ff83c18b5fa6652952dfaded66f728", size = 442998, upload-time = "2026-09-17T20:07:55.826Z" },
+    { url = "https://files.pythonhosted.org/packages/8a/55/b77bda4e5e5f5971fb51b07663694690e9afdb9402136c16a522bd621cad/protobuf-7.36.2-cp310-abi3-win_amd64.whl", hash = "sha256:a300819d441e078a5608c0d3c709796bb548136058fda017ae51d425b44fd353", size = 456514, upload-time = "2026-09-17T20:07:57.188Z" },
+    { url = "https://files.pythonhosted.org/packages/e4/04/d52c7016b04b6c5108f26691f9d33ec82a9b65d041f1a9c771137693d618/protobuf-7.36.2-py3-none-any.whl", hash = "sha256:bdb3a345d48db958e6ce1f18e508beb0cc981d64f24088427549c866cd039f1e", size = 179806, upload-time = "2026-09-17T20:07:58.211Z" },
+]
+
+[[package]]
 name = "pydantic"
 version = "2.14.4"
 source = { registry = "https://pypi.org/simple" }
@@ -571,7 +612,9 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "boto3" },
+    { name = "confluent-kafka" },
     { name = "duckdb" },
+    { name = "gtfs-realtime-bindings" },
     { name = "httpx" },
     { name = "pydantic-settings" },
 ]
@@ -583,12 +626,15 @@ dev = [
     { name = "pre-commit" },
     { name = "pytest" },
     { name = "ruff" },
+    { name = "types-protobuf" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "boto3", specifier = ">=1.44.9" },
+    { name = "confluent-kafka", specifier = ">=2.16.2" },
     { name = "duckdb", specifier = ">=2.0.1" },
+    { name = "gtfs-realtime-bindings", specifier = ">=3.0.0" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "pydantic-settings", specifier = ">=2.16" },
 ]
@@ -600,6 +646,16 @@ dev = [
     { name = "pre-commit", specifier = ">=4.7" },
     { name = "pytest", specifier = ">=9.2" },
     { name = "ruff", specifier = ">=0.17" },
+    { name = "types-protobuf", specifier = ">=7.35.1.20260906" },
+]
+
+[[package]]
+name = "types-protobuf"
+version = "7.35.1.20260906"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e1/6c/e3e5b3e10bc328126a39637c138f9ebfd734bf14342b9f3540039b4ab995/types_protobuf-7.35.1.20260906.tar.gz", hash = "sha256:efd1a3862d4c967dad5512ef8d56b1530ac84f182c41735b94004756518c4998", size = 69895, upload-time = "2026-09-06T06:35:28.308Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/44/4e/f63e826c68f77ef875506d72f225918800346545ee99847bc28f3394f18d/types_protobuf-7.35.1.20260906-py3-none-any.whl", hash = "sha256:5155e48569e0dabff303fdf578db96cd31ea9a4a63b18018a4ceac6b0ae17462", size = 86419, upload-time = "2026-09-06T06:35:27.247Z" },
 ]
 
 [[package]]

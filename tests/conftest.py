@@ -46,3 +46,12 @@ def gtfs_zip() -> bytes:
 def zip_builder() -> ZipBuilder:
     """Constructeur d'archives GTFS paramétrable."""
     return build_gtfs_zip
+
+
+GTFS_RT_DIR = FIXTURES / "gtfs_rt"
+
+
+@pytest.fixture
+def rt_payloads() -> dict[str, bytes]:
+    """Extraits réels des trois flux GTFS-RT STAR (protobuf)."""
+    return {p.stem: p.read_bytes() for p in GTFS_RT_DIR.glob("*.pb")}

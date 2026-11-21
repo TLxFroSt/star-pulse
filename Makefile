@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 UV ?= uv
 
-.PHONY: help install up down lint fmt test test-integration ingest-gtfs
+.PHONY: help install up down lint fmt test test-integration ingest-gtfs produce-rt
 
 help: ## Affiche cette aide
 	@grep -E '^[a-z]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  %-10s %s\n", $$1, $$2}'
@@ -34,3 +34,6 @@ test-integration: ## Tests d'intégration (nécessite `make up`)
 
 ingest-gtfs: ## Ingère le GTFS théorique STAR dans bronze (MinIO)
 	$(UV) run python -m star_pulse.ingestion.gtfs_static
+
+produce-rt: ## Lance le producteur GTFS-RT vers Redpanda (Ctrl+C pour arrêter)
+	$(UV) run python -m star_pulse.ingestion.gtfs_rt
