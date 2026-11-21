@@ -30,6 +30,8 @@ STOPS_KEY = "stops"  # arrêts choisis, dans la barre latérale ou par clic sur 
 MAP_LAYER_ID = "stops"
 WEEKDAYS = ("lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim.")
 SERVICE_DAY_START_HOUR = 4  # une journée de service va de 4 h à 3 h le lendemain
+AUTHOR = "Mehdi Mami"
+AUTHOR_URL = "https://github.com/TLxFroSt"
 REPO_URL = "https://github.com/TLxFroSt/star-pulse"
 EMPTY_MESSAGE = (
     "Pas encore de données gold. Lancer `make up`, `make produce-rt`, `make consume-rt`, "
@@ -60,6 +62,9 @@ CSS = f"""
 <style>
 [data-testid="stMainBlockContainer"] {{ padding-top: 2.5rem; padding-bottom: 3rem; }}
 .sp-subtitle {{ color: {INK_SECONDARY}; font-size: 1.02rem; margin: -0.5rem 0 0; }}
+.sp-byline {{ color: {INK_MUTED}; font-size: 0.9rem; margin: 0.35rem 0 0; }}
+.sp-byline a {{ color: {INK_SECONDARY}; font-weight: 600; text-decoration: none; }}
+.sp-byline a:hover {{ color: {ACCENT}; text-decoration: underline; }}
 .sp-card-title {{ color: {INK}; font-size: 1.05rem; font-weight: 600; }}
 .sp-card-sub {{ color: {INK_SECONDARY}; font-size: 0.875rem; margin-top: 0.1rem; }}
 .sp-split {{ display: flex; gap: 2px; height: 28px; margin: 0.6rem 0 0.7rem; }}
@@ -211,6 +216,9 @@ def _header(last_observed: datetime | None) -> None:
         st.html(
             '<p class="sp-subtitle">Ponctualité des bus et du métro de Rennes (réseau STAR), '
             "mesurée en continu à partir des flux temps réel GTFS-RT.</p>"
+            f'<p class="sp-byline">Un projet de <a href="{AUTHOR_URL}" target="_blank">'
+            f"{escape(AUTHOR)}</a>{SEP}"
+            f'<a href="{REPO_URL}" target="_blank">code source</a></p>'
         )
     if last_observed is None:
         return
@@ -280,7 +288,7 @@ def _sidebar(
             "**À l'heure** : entre 1 min d'avance et 3 min de retard sur l'horaire "
             "théorique. Arrivées au terminus exclues, arrêts supprimés comptés à part.\n\n"
             "**Sources** : GTFS et GTFS-RT du réseau STAR (open data Rennes Métropole).\n\n"
-            f"[Code source sur GitHub]({REPO_URL})"
+            f"Projet réalisé par [{AUTHOR}]({AUTHOR_URL}){SEP}[code source sur GitHub]({REPO_URL})"
         )
     day_types = tuple(selected) if isinstance(selected, list) and selected else DAY_TYPES
     stop_ids = tuple(sorted({stop_id for name in stop_names for stop_id in groups[name]}))
@@ -923,6 +931,7 @@ def render(reader: GoldReader) -> None:
         _route_table(routes)
 
     st.caption(
+        f"STAR Pulse, un projet de {AUTHOR}. "
         "Pipeline : flux GTFS-RT, Redpanda, Parquet sur MinIO, modèles dbt + DuckDB, "
         "orchestration Dagster. Données : réseau STAR, open data Rennes Métropole."
     )

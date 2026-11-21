@@ -245,6 +245,7 @@ def test_page_renders(gold_dir: Path) -> None:
         "Passages observés",
     ]
     assert app.metric[0].value == f"50,0{NBSP}%"
+    assert any("Mehdi Mami" in caption.value for caption in app.caption)
 
 
 def test_page_with_selected_stop(gold_dir: Path) -> None:
