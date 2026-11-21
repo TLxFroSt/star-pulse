@@ -1,0 +1,109 @@
+version: 2
+
+models:
+  - name: dim_routes
+    description: Lignes du réseau (version GTFS la plus récente).
+    columns:
+      - name: route_id
+        data_tests: [unique, not_null]
+
+  - name: dim_stops
+    description: Arrêts du réseau (version GTFS la plus récente), avec coordonnées.
+    columns:
+      - name: stop_id
+        data_tests: [unique, not_null]
+
+  - name: fct_stop_passages
+    description: >
+      Un passage révolu par ligne, classé en avance / à l'heure / en retard /
+      supprimé. Heure et jour = horaire théorique en heure locale.
+    columns:
+      - name: passage_id
+        data_tests: [unique, not_null]
+      - name: route_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_routes')
+                field: route_id
+      - name: stop_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_stops')
+                field: stop_id
+      - name: punctuality_class
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [early, on_time, late, skipped]
+      - name: scheduled_hour
+        data_tests:
+          - value_between:
+              arguments: {min_value: 0, max_value: 23}
+
+  - name: fct_punctuality_route_day
+    description: KPI de ponctualité par ligne et par jour (arrivées au terminus exclues).
+    data_tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [route_id, service_date]
+    columns: &kpi_columns
+      - name: pct_on_time
+        description: Part des passages observés dont le retard est dans [−1 min, +3 min].
+        data_tests:
+          - value_between:
+              arguments: {min_value: 0, max_value: 1}
+      - name: pct_early
+        data_tests:
+          - value_between:
+              arguments: {min_value: 0, max_value: 1}
+      - name: pct_late
+        data_tests:
+          - value_between:
+              arguments: {min_value: 0, max_value: 1}
+      - name: p90_delay_s
+        description: 90e centile du retard, en secondes.
+
+  - name: fct_punctuality_route_hour
+    description: KPI de ponctualité par ligne, jour et heure théorique locale.
+    data_tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [route_id, service_date, scheduled_hour]
+    columns: *kpi_columns
+
+  - name: fct_punctuality_stop_day
+    description: KPI de ponctualité par arrêt et par jour, pour la carte.
+    data_tests:
+      - unique_combination_of_columns:
+          arguments:
+            combination_of_columns: [stop_id, service_date]
+    columns: *kpi_columns
+
+unit_tests:
+  - name: test_fct_stop_passages_punctuality_class
+    description: >
+      Bornes incluses : −60 s et +180 s sont « à l'heure ». Le dernier arrêt de
+      la course est marqué comme arrivée au terminus.
+    model: fct_stop_passages
+    given:
+      - input: ref('int_stop_passages_matched')
+        rows:
+          - {passage_id: a, gtfs_version: v1, trip_id: t1, stop_sequence: 1, passage_status: observed, delay_s: -61, service_date: 2026-11-21, scheduled_at: "2026-11-21 10:00:00+00"}
+          - {passage_id: b, gtfs_version: v1, trip_id: t1, stop_sequence: 2, passage_status: observed, delay_s: -60, service_date: 2026-11-21, scheduled_at: "2026-11-21 10:05:00+00"}
+          - {passage_id: c, gtfs_version: v1, trip_id: t1, stop_sequence: 3, passage_status: observed, delay_s: 180, service_date: 2026-11-21, scheduled_at: "2026-11-21 10:10:00+00"}
+          - {passage_id: d, gtfs_version: v1, trip_id: t1, stop_sequence: 4, passage_status: observed, delay_s: 181, service_date: 2026-11-21, scheduled_at: "2026-11-21 10:15:00+00"}
+          - {passage_id: e, gtfs_version: v1, trip_id: t1, stop_sequence: 5, passage_status: skipped, delay_s: null, service_date: 2026-11-21, scheduled_at: "2026-11-21 23:30:00+00"}
+      - input: ref('stg_gtfs__stop_times')
+        rows:
+          - {gtfs_version: v1, trip_id: t1, stop_sequence: 1}
+          - {gtfs_version: v1, trip_id: t1, stop_sequence: 5}
+    expect:
+      rows:
+        - {passage_id: a, punctuality_class: early, is_terminus_arrival: false, scheduled_hour: 11, service_day_type: samedi}
+        - {passage_id: b, punctuality_class: on_time, is_terminus_arrival: false, scheduled_hour: 11, service_day_type: samedi}
+        - {passage_id: c, punctuality_class: on_time, is_terminus_arrival: false, scheduled_hour: 11, service_day_type: samedi}
+        - {passage_id: d, punctuality_class: late, is_terminus_arrival: false, scheduled_hour: 11, service_day_type: samedi}
+        - {passage_id: e, punctuality_class: skipped, is_terminus_arrival: true, scheduled_hour: 0, service_day_type: samedi}

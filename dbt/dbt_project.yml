@@ -18,6 +18,10 @@ vars:
   # Une prévision dont la course n'a pas été mise à jour depuis plus longtemps
   # est figée (courses « fantômes » du flux STAR) : elle est ignorée.
   rt_max_update_age_minutes: 30
+  # Ponctualité : un passage est « à l'heure » si son retard est dans
+  # [on_time_min_delay_s, on_time_max_delay_s] (−1 min / +3 min).
+  on_time_min_delay_s: -60
+  on_time_max_delay_s: 180
 
 models:
   star_pulse:
@@ -25,3 +29,5 @@ models:
       +materialized: view
     intermediate:
       +materialized: table
+    gold:
+      +materialized: external

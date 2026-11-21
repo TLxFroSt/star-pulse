@@ -72,7 +72,7 @@ make consume-rt    # terminal 2 — écrit un lot Parquet par minute dans MinIO
 Silver (après quelques minutes de temps réel) :
 
 ```bash
-make dbt-build     # staging + rapprochement théorique / réel, tests dbt
+make dbt-build     # silver (rapprochement théorique / réel) + gold (KPI), tests dbt
 make dbt-docs      # documentation et lignage sur http://localhost:8081
 ```
 
@@ -80,6 +80,11 @@ La table centrale `int_stop_passages_matched` (un passage révolu par ligne, ave
 horaire théorique et son retard en secondes) est écrite en Parquet dans
 `s3://lake/silver/`. Les règles de rapprochement sont décrites dans
 [l'ADR 0005](docs/adr/0005-silver-rapprochement-theorique-reel.md).
+
+Les KPI de ponctualité sont dans `s3://lake/gold/` : par ligne et jour, par ligne et
+heure, par arrêt et jour, plus les dimensions `dim_routes` / `dim_stops`. Un passage
+est « à l'heure » si son retard est entre −1 min et +3 min ; définitions complètes
+dans [l'ADR 0006](docs/adr/0006-kpi-ponctualite.md).
 
 ## Commandes
 
@@ -93,7 +98,7 @@ horaire théorique et son retard en secondes) est écrite en Parquet dans
 | `make ingest-gtfs` | ingère le GTFS théorique STAR dans `s3://lake/bronze/gtfs_static/` |
 | `make produce-rt` | interroge les flux GTFS-RT toutes les 30 s et publie sur Redpanda |
 | `make consume-rt` | consomme Redpanda et écrit le Parquet bronze (`s3://lake/bronze/gtfs_rt/`) |
-| `make dbt-build` | construit et teste le silver dbt (`s3://lake/silver/`) |
+| `make dbt-build` | construit et teste le silver et le gold dbt (`s3://lake/silver/`, `s3://lake/gold/`) |
 | `make dbt-freshness` | alerte si le bronze temps réel a plus de 10 min |
 | `make dbt-docs` | documentation dbt sur http://localhost:8081 |
 
@@ -122,7 +127,7 @@ La collecte respecte les sources : polling ≥ 30 s, User-Agent explicite, retri
 - [x] **Étape 2** — Producteur GTFS-RT → Redpanda (déduplication, producteur idempotent)
 - [x] **Étape 3** — Consumer Redpanda → Parquet sur MinIO (at-least-once, partitions date/heure)
 - [x] **Étape 4** — dbt silver : rapprochement théorique / réel
-- [ ] **Étape 5** — dbt gold : KPI de ponctualité
+- [x] **Étape 5** — dbt gold : KPI de ponctualité
 - [ ] **Étape 6** — Orchestration Dagster
 - [ ] **Étape 7** — Dashboard Streamlit
 - [ ] **Étape 8** — CI GitHub Actions, README complet, ADR
