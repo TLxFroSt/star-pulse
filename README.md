@@ -97,6 +97,18 @@ dès qu'une nouvelle version GTFS arrive) et contrôle la fraîcheur du temps r�
 producteur et le consumer restent lancés à part (`make produce-rt` / `make consume-rt`),
 voir [l'ADR 0007](docs/adr/0007-orchestration-dagster.md).
 
+Dashboard :
+
+```bash
+make dashboard     # http://localhost:8501
+```
+
+KPI du réseau (% à l'heure, en retard, en avance, retard médian et p90), ponctualité
+par heure, classement des lignes aux couleurs STAR et carte des arrêts colorés selon
+leur ponctualité, avec filtres par période, type de jour et ligne. Les indicateurs
+sont recalculés depuis la table de faits gold : centiles exacts, aucune moyenne de
+pourcentages.
+
 ## Commandes
 
 | Commande | Effet |
@@ -113,14 +125,15 @@ voir [l'ADR 0007](docs/adr/0007-orchestration-dagster.md).
 | `make dbt-freshness` | alerte si le bronze temps réel a plus de 10 min |
 | `make dbt-docs` | documentation dbt sur http://localhost:8081 |
 | `make dagster` | interface Dagster sur http://localhost:3000 (schedules et sensor actifs) |
+| `make dashboard` | dashboard Streamlit sur http://localhost:8501 |
 
 ## Structure
 
 ```
-src/star_pulse/   code Python (config, ingestion, streaming, transform, orchestration, common)
+src/star_pulse/   code Python (config, ingestion, streaming, transform, orchestration, dashboard, common)
 dbt/              projet dbt (bronze / silver / gold)
 orchestration/    instance Dagster locale (dagster.yaml)
-dashboard/        app Streamlit
+dashboard/        point d'entrée Streamlit (app.py)
 infra/terraform/  bonus : déploiement Azure
 docs/adr/         Architecture Decision Records
 tests/            unit/, integration/, fixtures/
@@ -141,5 +154,5 @@ La collecte respecte les sources : polling ≥ 30 s, User-Agent explicite, retri
 - [x] **Étape 4** — dbt silver : rapprochement théorique / réel
 - [x] **Étape 5** — dbt gold : KPI de ponctualité
 - [x] **Étape 6** — Orchestration Dagster
-- [ ] **Étape 7** — Dashboard Streamlit
+- [x] **Étape 7** — Dashboard Streamlit
 - [ ] **Étape 8** — CI GitHub Actions, README complet, ADR

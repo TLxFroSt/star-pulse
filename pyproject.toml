@@ -14,6 +14,7 @@ dependencies = [
     "gtfs-realtime-bindings>=1.0,<3",
     "httpx>=0.28.1",
     "pydantic-settings>=2.16",
+    "streamlit>=1.67.0",
     "tzdata>=2026.6",
 ]
 
@@ -22,6 +23,7 @@ dev = [
     "boto3-stubs[s3]>=1.44.9",
     "dagster-webserver>=1.13.31",
     "mypy>=2.4",
+    "pandas-stubs>=3.1.0.261029",
     "pre-commit>=4.7",
     "pytest>=9.2",
     "ruff>=0.17",
@@ -59,6 +61,11 @@ python_version = "3.12"
 strict = true
 files = ["src"]
 plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+# pydeck (carte du dashboard) ne publie pas de types.
+module = ["pydeck.*"]
+ignore_missing_imports = true
 
 [tool.pydantic-mypy]
 init_forbid_extra = true

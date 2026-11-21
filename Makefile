@@ -2,7 +2,7 @@
 UV ?= uv
 
 .PHONY: help install up down lint fmt test test-integration ingest-gtfs produce-rt consume-rt \
-	dbt-build dbt-freshness dbt-docs dagster
+	dbt-build dbt-freshness dbt-docs dagster dashboard
 
 help: ## Affiche cette aide
 	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "} {printf "  %-16s %s\n", $$1, $$2}'
@@ -54,3 +54,6 @@ dbt-docs: ## Génère et sert la documentation dbt (http://localhost:8081)
 
 dagster: ## Lance Dagster (UI, schedules, sensor) sur http://localhost:3000
 	DAGSTER_HOME="$(CURDIR)/orchestration" $(UV) run dagster dev -m star_pulse.orchestration.definitions -p 3000
+
+dashboard: ## Lance le dashboard Streamlit sur http://localhost:8501
+	$(UV) run streamlit run dashboard/app.py --browser.gatherUsageStats false
