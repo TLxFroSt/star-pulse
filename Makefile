@@ -37,3 +37,6 @@ ingest-gtfs: ## Ingère le GTFS théorique STAR dans bronze (MinIO)
 
 produce-rt: ## Lance le producteur GTFS-RT vers Redpanda (Ctrl+C pour arrêter)
 	$(UV) run python -m star_pulse.ingestion.gtfs_rt
+
+consume-rt: ## Consomme Redpanda et écrit le Parquet bronze sur MinIO (Ctrl+C pour arrêter)
+	$(UV) run python -m star_pulse.streaming.bronze_writer

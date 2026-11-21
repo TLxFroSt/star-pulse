@@ -20,6 +20,7 @@ import hashlib
 import json
 import logging
 import signal
+import sys
 import threading
 from collections.abc import Sequence
 from dataclasses import dataclass, field
@@ -37,6 +38,7 @@ from google.protobuf.message import DecodeError
 from google.transit import gtfs_realtime_pb2
 
 from star_pulse.common.http import build_client, get_with_retry
+from star_pulse.common.kafka import BrokerUnavailableError, check_broker
 from star_pulse.common.logging import configure_logging
 from star_pulse.config import Settings, get_settings
 
@@ -315,6 +317,7 @@ def poll_once(
 def run(settings: Settings, *, once: bool = False, stop: threading.Event | None = None) -> None:
     """Boucle de collecte jusqu'à `stop` (ou un seul cycle si `once`)."""
     stop = stop or threading.Event()
+    check_broker(settings.kafka_bootstrap_servers)
     ensure_topics(
         settings.kafka_bootstrap_servers,
         [settings.topic_trip_updates, settings.topic_vehicle_positions, settings.topic_alerts],
@@ -347,7 +350,11 @@ def main(argv: Sequence[str] | None = None) -> None:
 
     signal.signal(signal.SIGINT, _handle_signal)
     signal.signal(signal.SIGTERM, _handle_signal)
-    run(settings, once=args.once, stop=stop)
+    try:
+        run(settings, once=args.once, stop=stop)
+    except BrokerUnavailableError as exc:
+        logger.error(str(exc))
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ dependencies = [
     "gtfs-realtime-bindings>=3.0.0",
     "httpx>=0.28.1",
     "pydantic-settings>=2.16",
+    "tzdata>=2026.6",
 ]
 
 [dependency-groups]

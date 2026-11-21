@@ -34,6 +34,10 @@ class Settings(BaseSettings):
     topic_trip_updates: str = "gtfs-rt.trip-updates"
     topic_vehicle_positions: str = "gtfs-rt.vehicle-positions"
     topic_alerts: str = "gtfs-rt.alerts"
+    kafka_consumer_group: str = "star-pulse-bronze"
+    # Un lot est écrit dès qu'il atteint l'un des deux seuils.
+    bronze_batch_max_records: int = Field(default=5000, gt=0)
+    bronze_batch_max_age_s: float = Field(default=60.0, gt=0)
 
     # --- MinIO / S3
     s3_endpoint_url: HttpUrl = HttpUrl("http://localhost:9000")
